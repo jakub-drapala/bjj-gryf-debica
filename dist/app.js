@@ -115,3 +115,12 @@ if (contactForm) {
       });
   });
 }
+
+// Przyciski z data-training przewijają do formularza i od razu wybierają rodzaj treningu.
+document.querySelectorAll('[data-training]').forEach(link => {
+  link.addEventListener('click', () => {
+    const select = document.querySelector('#cf-training');
+    if (!select) return;
+    select.value = link.dataset.training;
+  });
+});
