@@ -12,7 +12,7 @@ Docelowa strona rozwija wybrany wariant 2 „Klub”: jasne tło, czerwień herb
 - Pełny tygodniowy grafik, filtrowany według grupy.
 - Przygotowanie do pierwszego treningu i pytania z rozwijanymi odpowiedziami.
 - Telefon, e-mail, mapa oraz trzy profile Facebooka.
-- Formularz kontaktowy (imię i nazwisko, telefon lub e-mail, rodzaj treningu, wiadomość) wysyłany przez EmailJS na adres Marcina.
+- Podstrona `/kontakt` z formularzem (imię i nazwisko, telefon lub e-mail, rodzaj treningu, wiadomość) wysyłanym przez EmailJS na adres Marcina.
 - Menu mobilne i stały pasek szybkiego kontaktu na telefonie.
 
 ## Edycja i podgląd
@@ -46,7 +46,9 @@ Automatyczna obsługa HTML udostępnia stronę główną pod `/`. Hosting Cloudf
 
 ## Formularz kontaktowy
 
-Sekcja `#kontakt` zawiera formularz wysyłany z przeglądarki przez EmailJS (to samo konto co Business-website: public key `ZOBwl7GMNRPwk_VRu`, serwis `service_3ae2jx4`). Logika w `dist/app.js`. Szablon **`template_cyeoxc6`** ma w panelu EmailJS adresata `marcinb88@interia.pl` i zmienne `{{name}}`, `{{contact}}`, `{{training}}`, `{{message}}`; pole Reply-To: `{{reply_to}}` (wypełniane tylko, gdy w kontakcie podano e-mail). Bez JavaScriptu formularz nie wysyła wiadomości; telefon i e-mail obok pozostają dostępne.
+Formularz jest na podstronie `dist/kontakt.html` (adres `/kontakt`, menu „Napisz”); sekcja `#kontakt` na stronie głównej prowadzi do niej przyciskiem. Formularz wysyła wiadomość z przeglądarki przez EmailJS (to samo konto co Business-website: public key `ZOBwl7GMNRPwk_VRu`, serwis `service_3ae2jx4`). Logika w `dist/app.js`. Szablon **`template_cyeoxc6`** ma w panelu EmailJS adresata `marcinb88@interia.pl` i zmienne `{{name}}`, `{{contact}}`, `{{training}}`, `{{message}}`; pole Reply-To: `{{reply_to}}` (wypełniane tylko, gdy w kontakcie podano e-mail). Parametr `?trening=<slug>` wybiera od razu opcję z listy (slug z atrybutu `data-slug`: `kids`, `junior`, `nogi-poczatkujacy`, `nogi-zaawansowani`, `gi`, `sparingi`, `indywidualny`, `nie-wiem`); tak działa „Umów trening 1:1” → `/kontakt?trening=indywidualny`. Bez JavaScriptu formularz nie wysyła wiadomości; telefon i e-mail obok pozostają dostępne.
+
+Podstrony nie otworzysz pod `/kontakt` przez `python3 -m http.server` (tylko jako `/kontakt.html`). Zachowanie jak na Cloudflare daje `wrangler dev --config wrangler.jsonc --compatibility-date 2026-05-22` (lokalny runtime nie zna jeszcze daty z konfiguracji).
 
 ## Dane
 

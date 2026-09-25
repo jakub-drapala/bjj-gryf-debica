@@ -51,8 +51,8 @@ document.documentElement.classList.add('js');
 // Highlight the weekday in the club's timezone, independently of the visitor's timezone.
 const weekday = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Warsaw', weekday: 'short' }).format(new Date());
 const dayIndex = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].indexOf(weekday);
-if (dayIndex >= 0) {
-  const day = document.querySelectorAll('.day')[dayIndex];
+const day = dayIndex >= 0 && document.querySelectorAll('.day')[dayIndex];
+if (day) {
   day.classList.add('is-today');
   const label = document.createElement('span');
   label.className = 'today-label';
@@ -74,7 +74,11 @@ if ('IntersectionObserver' in window) {
       else link.removeAttribute('aria-current');
     });
   }, { rootMargin: '-15% 0px -65% 0px' });
-  links.forEach(link => { const section = document.querySelector(link.hash); if (section) observer.observe(section); });
+  links.forEach(link => {
+    if (link.pathname !== location.pathname || !link.hash) return;
+    const section = document.querySelector(link.hash);
+    if (section) observer.observe(section);
+  });
 }
 
 // Formularz kontaktowy — wysyłka przez EmailJS (to samo konto co Business-website).
@@ -83,6 +87,10 @@ const contactForm = document.querySelector('#contact-form');
 if (contactForm) {
   const submitButton = contactForm.querySelector('.form-submit');
   const status = contactForm.querySelector('.form-status');
+  // /kontakt?trening=indywidualny wybiera od razu opcję z data-slug="indywidualny".
+  const wanted = new URLSearchParams(location.search).get('trening');
+  const option = wanted && contactForm.querySelector(`option[data-slug="${CSS.escape(wanted)}"]`);
+  if (option) option.selected = true;
   const setStatus = (text, state) => {
     status.textContent = text;
     status.dataset.state = state || '';
@@ -115,12 +123,3 @@ if (contactForm) {
       });
   });
 }
-
-// Przyciski z data-training przewijają do formularza i od razu wybierają rodzaj treningu.
-document.querySelectorAll('[data-training]').forEach(link => {
-  link.addEventListener('click', () => {
-    const select = document.querySelector('#cf-training');
-    if (!select) return;
-    select.value = link.dataset.training;
-  });
-});

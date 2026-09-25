@@ -19,8 +19,9 @@ Stan sprawdzony 25.09.2026: gałąź `main`, brak skonfigurowanego zdalnego repo
 | Plik | Zawartość |
 | --- | --- |
 | `dist/index.html` | Treść, grafik, kontakt, metadane i struktura strony |
+| `dist/kontakt.html` | Podstrona `/kontakt` z formularzem do Marcina. Nagłówek i stopka są kopią ze strony głównej — zmiany menu wprowadzaj w obu plikach |
 | `dist/style.css` | Kolory, układ, typografia i wersja mobilna |
-| `dist/app.js` | Menu, filtry grafiku i oznaczenie bieżącego dnia |
+| `dist/app.js` | Menu, filtry grafiku, oznaczenie bieżącego dnia i wysyłka formularza (wspólny dla obu stron) |
 | `dist/fonts.css` | Lokalne fonty |
 | `dist/assets/` | Zdjęcia, herb, grafika promocyjna i fonty z licencjami |
 | `dist/_redirects` | Przekierowania starych adresów szablonów |
