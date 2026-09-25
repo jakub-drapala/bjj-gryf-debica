@@ -1,18 +1,117 @@
-const theme = document.body.classList.contains('klub') ? 'klub' : document.body.classList.contains('trener') ? 'trener' : 'arena';
-const phone = '<a class="button primary" href="tel:+48690012036">Umów pierwszy trening <span aria-hidden="true">↗</span></a>';
-const personal = '<a class="button primary" href="tel:+48690012036">Umów trening 1:1 <span aria-hidden="true">↗</span></a>';
-const image = (name, alt, cls='') => `<img class="${cls}" src="assets/${name}" alt="${alt}" loading="lazy">`;
-const heroes = {
-arena: `<section class="hero arena-hero"><img class="hero-photo" src="assets/trening.jpg" alt="Trening brazylijskiego jiu-jitsu na macie Gryfa"><div class="hero-shade"></div><div class="hero-content wrap"><p class="eyebrow">DĘBICA · BRAZYLIJSKIE JIU-JITSU</p><h1>TWÓJ PIERWSZY<br>KROK.<br><em>NASZA MATA.</em></h1><p class="hero-description">Zacznij od podstaw. Poznaj swoją siłę.<br>Trenuj BJJ z ekipą Gryfa i Marcinem Blezieniem.</p><div class="actions">${phone}<a class="button outline" href="#grafik">Sprawdź grafik</a></div><p class="micro">Pierwszy trening grupowy za darmo</p></div><div class="hero-stamp">GI / NO-GI<br><span>GRYF DĘBICA</span></div></section>`,
-klub: `<section class="hero club-hero wrap"><div class="hero-content"><p class="eyebrow">BJJ GRYF DĘBICA · ZR TEAM</p><h1>JEST MIEJSCE<br><em>DLA CIEBIE.</em><br>NA MACIE.</h1><p class="hero-description">Nowa pasja, lepsza forma i ludzie, z którymi chcesz trenować. Odkryj brazylijskie jiu-jitsu — od pierwszych kroków po własne sportowe cele.</p><div class="actions">${phone}<a class="text-link" href="#grafik">Zobacz grafik ↗</a></div><p class="micro">Dzieci od 4 lat · młodzież · dorośli</p></div><div class="club-collage"><img class="club-main" src="assets/technika.jpg" alt="Marcin Blezień pokazuje technikę BJJ podczas treningu"><div class="free-note"><strong>PIERWSZY<br>TRENING?</strong><span>Wpadnij za darmo.</span></div><img class="club-small" src="assets/grupa.jpg" alt="Zawodniczki ćwiczące technikę na macie Gryfa"></div></section>`,
-trener: `<section class="hero coach-hero"><div class="wrap coach-layout"><div class="hero-content"><p class="eyebrow">MARCIN BLEZIEŃ · CZARNY PAS BJJ</p><h1>TWÓJ CEL.<br>TWÓJ TRENING.<br><em>JEDEN NA JEDEN.</em></h1><p class="hero-description">Trening indywidualny z trenerem głównym Gryfa. Od pierwszej techniki do detali, które robią różnicę na zawodach.</p><div class="actions">${personal}<a class="button outline" href="#grupy">Wolę trening w grupie</a></div><p class="micro">Gi i No-Gi · każdy poziom · termin ustalamy z Tobą</p></div><div class="coach-portrait"><img src="assets/marcin.jpg" alt="Marcin Blezień, trener główny BJJ Gryf Dębica"><div class="portrait-caption"><span>TWÓJ TRENER</span><strong>MARCIN<br>BLEZIEŃ</strong><small>Czarny pas. Czynny zawodnik.</small></div></div></div></section>`
-};
-const groups = `<section id="grupy" class="section wrap"><div class="section-heading"><div><p class="eyebrow">01 / TRENINGI GRUPOWE</p><h2>ZNAJDŹ SWOJĄ<br><em>EKIPĘ.</em></h2></div><p>Nie potrzebujesz doświadczenia, żeby zacząć.<br>Wybierz grupę, a resztę zbudujemy na macie.</p></div><div class="group-grid"><article><span class="group-number">01</span><h3>PIERWSZE KROKI</h3><p>No-Gi od podstaw. Poznaj pozycje, kontrolę i techniki bez kimona, w grupie początkujących.</p><a href="#grafik">No-Gi początkujący ↗</a></article><article><span class="group-number">02</span><h3>KOLEJNY POZIOM</h3><p>Rozwijaj swój styl w kimonie i bez. Gi, zaawansowane No-Gi oraz piątkowe sparingi.</p><a href="#grafik">Gi, No-Gi i sparingi ↗</a></article><article><span class="group-number">03</span><h3>MALI WOJOWNICY</h3><p>Ruch, koordynacja i radość z nauki. BJJ Kids dla dzieci 4–6 lat i Junior dla wieku 7–14 lat.</p><a href="#grafik">Kids i Junior ↗</a></article></div></section>`;
-const poster = `<div class="personal-poster" role="img" aria-label="Treningi indywidualne BJJ z Marcinem Blezieniem. Gi i No-Gi, każdy poziom. Zapisy 690 012 036."><img class="poster-photo" src="assets/marcin.jpg" alt="" loading="lazy"><div class="poster-overlay"></div><img class="poster-logo" src="assets/herb.png" alt="" loading="lazy"><div class="poster-copy"><span>BJJ GRYF DĘBICA</span><strong>TRENING<br>SKROJONY<br><em>POD CIEBIE.</em></strong><p>MARCIN BLEZIEŃ / CZARNY PAS</p><div class="poster-bottom"><b>GI + NO-GI · TRENINGI 1:1</b><span>690 012 036</span></div></div></div>`;
-const one = `<section id="personalne" class="personal-section"><div class="wrap personal-grid">${poster}<div class="personal-copy"><p class="eyebrow">02 / TRENINGI INDYWIDUALNE</p><h2>WIĘCEJ UWAGI.<br><em>TWÓJ KIERUNEK.</em></h2><p>Masz konkretny cel? Chcesz spokojnie zacząć albo dopracować swoją grę? Pracuj bezpośrednio z Marcinem Blezieniem — w tempie dopasowanym do Ciebie.</p><ul class="benefits"><li><span>01</span>Plan dopasowany do Twojego poziomu i celu</li><li><span>02</span>Technika krok po kroku — Gi i No-Gi</li><li><span>03</span>Trening rekreacyjny lub przygotowanie do zawodów</li></ul>${personal}<p class="micro">Termin i cenę ustalisz bezpośrednio z Marcinem.</p></div></div></section>`;
-const trainer = `<section id="trener" class="section wrap trainer-section"><div class="trainer-photo">${image('technika.jpg','Marcin Blezień podczas nauczania techniki w klubie Gryf')}<span>Z DOŚWIADCZENIA. NA MATĘ.</span></div><div><p class="eyebrow">TRENER GŁÓWNY · ZR TEAM</p><h2>MARCIN<br><em>BLEZIEŃ.</em></h2><p>Czarny pas brazylijskiego jiu-jitsu, trener i czynny zawodnik. Prowadzi dzieci, młodzież i dorosłych. Doświadczenie z międzynarodowych mat przekłada na codzienną pracę z klubowiczami w Dębicy.</p><div class="achievements"><div><strong>2026</strong><span>Mistrz Polski No-Gi<br>czarne pasy, masters −85 kg</span></div><div><strong>2023 / 24</strong><span>Brąz ME No-Gi IBJJF<br>kategorie masters</span></div></div><a class="text-link" href="https://www.facebook.com/marcin.blezien" target="_blank" rel="noopener noreferrer">Poznaj Marcina na Facebooku ↗</a></div></section>`;
-const days=[['PON','Poniedziałek',[['18:30–19:30','No-Gi','Początkujący'],['19:30–20:30','Gi','Kimona']]],['WT','Wtorek',[['16:00–16:45','Kids','4–6 lat'],['17:00–18:00','Junior','7–14 lat'],['18:10–19:20','No-Gi','Zaawansowani']]],['ŚR','Środa',[['18:00','No-Gi','Początkujący'],['19:30–20:30','Gi','Kimona']]],['CZW','Czwartek',[['16:00–16:45','Kids','4–6 lat'],['17:00–18:00','Junior','7–14 lat'],['18:10–19:20','No-Gi','Zaawansowani']]],['PT','Piątek',[['18:30–19:30','Sparingi','Gi / No-Gi']]]];
-const schedule=`<section id="grafik" class="schedule-section"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">03 / GRAFIK BJJ</p><h2>ZAPLANUJ<br><em>SWÓJ TRENING.</em></h2></div><p>Grafik od września 2026<br>Krakowska 7, Dębica</p></div><div class="schedule-grid">${days.map(([short,name,items])=>`<article class="day"><h3><span>${short}</span>${name}</h3>${items.map(([time,title,desc])=>`<div class="class-item ${desc==='Początkujący'?'beginner':''}"><time>${time}</time><h4>${title}</h4><p>${desc}</p></div>`).join('')}</article>`).join('')}</div><div class="schedule-note"><p>Treningi indywidualne — termin po umówieniu z Marcinem.</p><a href="tel:+48690012036">Zapisy: 690 012 036 ↗</a></div></div></section>`;
-const first=`<section class="section wrap first-section"><div><p class="eyebrow">TWÓJ PIERWSZY TRENING</p><h2>ZACZNIJ<br><em>PO SWOJEMU.</em></h2></div><div class="steps"><article><span>01</span><div><h3>Zadzwoń lub napisz</h3><p>Powiedz, czy dopiero zaczynasz. Marcin pomoże dobrać grupę.</p></div></article><article><span>02</span><div><h3>Przygotuj strój sportowy</h3><p>Na No-Gi nie potrzebujesz kimona. Zabierz koszulkę, spodenki lub legginsy i wodę.</p></div></article><article><span>03</span><div><h3>Wejdź na matę</h3><p>Pierwszy trening grupowy jest darmowy. Poznaj ekipę i sprawdź, jak Ci się trenuje.</p></div></article></div></section>`;
-const contact=`<section id="kontakt" class="contact-section"><div class="wrap"><p class="eyebrow">DO ZOBACZENIA NA MACIE</p><h2>TERAZ<br><em>TWÓJ RUCH.</em></h2><div class="contact-grid"><div><p>Zapisy na grupy i treningi indywidualne</p><a class="big-phone" href="tel:+48690012036">690 012 036</a><span class="contact-name">Marcin Blezień</span><a class="mail" href="mailto:marcinb88@interia.pl">marcinb88@interia.pl ↗</a></div><div><h3>WIDZIMY SIĘ W DĘBICY</h3><p>Centrum Sportów Walki Dębica<br>ul. Krakowska 7, 39-200 Dębica</p><a class="text-link" href="https://www.google.com/maps/search/?api=1&query=Krakowska+7,+39-200+D%C4%99bica" target="_blank" rel="noopener noreferrer">Wyznacz trasę ↗</a></div><div class="socials"><h3>BĄDŹ BLISKO GRYFA</h3><a href="https://www.facebook.com/BJJGryfDebica" target="_blank" rel="noopener noreferrer">Facebook · BJJ Gryf Dębica ↗</a><a href="https://www.facebook.com/marcin.blezien" target="_blank" rel="noopener noreferrer">Facebook · Marcin Blezień ↗</a><a href="https://www.facebook.com/centrumsportowwalkidebica" target="_blank" rel="noopener noreferrer">Facebook · CSW Dębica ↗</a></div></div></div></section>`;
-document.querySelector('#app').innerHTML=`<header class="header wrap"><a class="brand" href="#main"><img src="assets/herb.png" alt="Herb BJJ Gryf Dębica"><span>GRYF DĘBICA<small>BRAZILIAN JIU-JITSU</small></span></a><nav aria-label="Menu główne"><a href="#grupy">Klub</a><a href="#personalne">Treningi 1:1</a><a href="#grafik">Grafik</a><a href="#kontakt">Kontakt</a></nav><a class="header-call" href="tel:+48690012036">690 012 036 ↗</a></header><main id="main">${heroes[theme]}<div class="brand-strip"><span>GRYF DĘBICA</span><span>GI & NO-GI</span><span>DZIECI I DOROŚLI</span><span>TRENINGI 1:1</span></div>${theme==='trener'?one+trainer+groups:groups+one+trainer}${schedule}${first}${contact}</main><footer class="footer wrap"><span>BJJ GRYF DĘBICA · ZR TEAM</span><span>Brazylijskie jiu-jitsu. Krakowska 7.</span><a href="#main">Wróć na górę ↑</a></footer>`;
+const menuButton = document.querySelector('.menu-toggle');
+const menu = document.querySelector('#main-nav');
+function closeMenu() {
+  menuButton.setAttribute('aria-expanded', 'false');
+  menu.classList.remove('is-open');
+}
+menuButton.addEventListener('click', () => {
+  const open = menuButton.getAttribute('aria-expanded') !== 'true';
+  menuButton.setAttribute('aria-expanded', String(open));
+  menu.classList.toggle('is-open', open);
+});
+menu.addEventListener('click', event => {
+  if (event.target.closest('a')) closeMenu();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+    closeMenu();
+    menuButton.focus();
+  }
+});
+document.addEventListener('click', event => {
+  if (!event.target.closest('.header')) closeMenu();
+});
+const filters = [...document.querySelectorAll('[data-filter]')];
+const filterNames = { all: 'Wszystkie zajęcia', start: 'Początkujący', kids: 'Dzieci', adults: 'Młodzież i dorośli' };
+function selectGroup(group) {
+  let count = 0;
+  filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === group)));
+  document.querySelectorAll('.class-item').forEach(item => {
+    item.hidden = group !== 'all' && !item.dataset.category.split(' ').includes(group);
+    if (!item.hidden) count++;
+  });
+  document.querySelectorAll('.day').forEach(day => {
+    let empty = day.querySelector('.day-empty');
+    if (!empty) {
+      empty = document.createElement('p');
+      empty.className = 'day-empty';
+      empty.textContent = 'Brak zajęć tej grupy';
+      day.append(empty);
+    }
+    empty.hidden = !!day.querySelector('.class-item:not([hidden])');
+    day.classList.toggle('filtered-empty', !empty.hidden);
+  });
+  document.querySelector('.filter-status').textContent = `${filterNames[group]} · ${count} ${count < 5 ? 'treningi' : 'treningów'} w tygodniu`;
+}
+filters.forEach(button => button.addEventListener('click', () => selectGroup(button.dataset.filter)));
+document.querySelectorAll('[data-select-group]').forEach(link => link.addEventListener('click', () => selectGroup(link.dataset.selectGroup)));
+// The full content and timetable remain available without JavaScript.
+document.documentElement.classList.add('js');
+
+// Highlight the weekday in the club's timezone, independently of the visitor's timezone.
+const weekday = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Warsaw', weekday: 'short' }).format(new Date());
+const dayIndex = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].indexOf(weekday);
+if (dayIndex >= 0) {
+  const day = document.querySelectorAll('.day')[dayIndex];
+  day.classList.add('is-today');
+  const label = document.createElement('span');
+  label.className = 'today-label';
+  label.textContent = 'DZIŚ';
+  const shortName = day.querySelector('h3 > span');
+  const row = document.createElement('span');
+  row.className = 'day-heading-row';
+  shortName.replaceWith(row);
+  row.append(shortName, label);
+}
+if ('IntersectionObserver' in window) {
+  const links = [...menu.querySelectorAll('a')];
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries.filter(entry => entry.isIntersecting);
+    if (!visible.length) return;
+    const id = visible[0].target.id;
+    links.forEach(link => {
+      if (link.hash === '#' + id) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }, { rootMargin: '-15% 0px -65% 0px' });
+  links.forEach(link => { const section = document.querySelector(link.hash); if (section) observer.observe(section); });
+}
+
+// Formularz kontaktowy — wysyłka przez EmailJS (to samo konto co Business-website).
+// Szablon template_cyeoxc6 ma w EmailJS ustawiony adresat marcinb88@interia.pl.
+const contactForm = document.querySelector('#contact-form');
+if (contactForm) {
+  const submitButton = contactForm.querySelector('.form-submit');
+  const status = contactForm.querySelector('.form-status');
+  const setStatus = (text, state) => {
+    status.textContent = text;
+    status.dataset.state = state || '';
+  };
+  contactForm.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
+    if (typeof emailjs === 'undefined') {
+      setStatus('Wysyłka chwilowo nie działa. Zadzwoń: 690 012 036 lub napisz na marcinb88@interia.pl.', 'error');
+      return;
+    }
+    // Reply-To tylko dla adresu e-mail — numer telefonu zostaje w treści maila.
+    const contact = contactForm.elements.contact.value.trim();
+    contactForm.elements.reply_to.value = contact.includes('@') ? contact : '';
+    submitButton.disabled = true;
+    setStatus('Wysyłanie…');
+    emailjs.sendForm('service_3ae2jx4', 'template_cyeoxc6', contactForm, { publicKey: 'ZOBwl7GMNRPwk_VRu' })
+      .then(() => {
+        contactForm.reset();
+        setStatus('Dziękujemy! Wiadomość trafiła do Marcina.', 'success');
+      }, error => {
+        console.error('EmailJS error:', error);
+        setStatus('Nie udało się wysłać. Spróbuj ponownie albo zadzwoń: 690 012 036.', 'error');
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+      });
+  });
+}
