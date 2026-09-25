@@ -19,12 +19,13 @@ Stan sprawdzony 25.09.2026: gałąź `main`, brak skonfigurowanego zdalnego repo
 | Plik | Zawartość |
 | --- | --- |
 | `dist/index.html` | Treść, grafik, kontakt, metadane i struktura strony |
-| `dist/kontakt.html` | Podstrona `/kontakt` z formularzem do Marcina. Nagłówek i stopka są kopią ze strony głównej — zmiany menu wprowadzaj w obu plikach |
+| `dist/formularz.html` | Samodzielna strona `/formularz` — „Formularz zgłoszeniowy” do Marcina, bez menu strony głównej |
+| `dist/formularz.js` | Wysyłka formularza przez EmailJS i wybór treningu z parametru `?trening=` |
 | `dist/style.css` | Kolory, układ, typografia i wersja mobilna |
-| `dist/app.js` | Menu, filtry grafiku, oznaczenie bieżącego dnia i wysyłka formularza (wspólny dla obu stron) |
+| `dist/app.js` | Menu, filtry grafiku i oznaczenie bieżącego dnia (tylko strona główna) |
 | `dist/fonts.css` | Lokalne fonty |
 | `dist/assets/` | Zdjęcia, herb, grafika promocyjna i fonty z licencjami |
-| `dist/_redirects` | Przekierowania starych adresów szablonów |
+| `dist/_redirects` | Przekierowania starych adresów szablonów i `/kontakt` → `/formularz` |
 | `wrangler.jsonc` | Konfiguracja wdrożenia na Cloudflare |
 
 Przy zmianie CSS lub JavaScriptu zwiększ numer przy odpowiednim odnośniku w `dist/index.html`, np. `style.css?v=4` na `style.css?v=5`. Numery CSS i JS mogą być różne. Dla zmienianych zdjęć lub fontów można użyć nowej nazwy pliku i zaktualizować odnośniki.

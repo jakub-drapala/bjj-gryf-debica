@@ -52,3 +52,10 @@
 .contact-aside h3{font-size:23px;margin:35px 0 16px}
 @media(max-width:850px){.contact-page-grid{grid-template-columns:1fr;gap:40px}}
 @media(max-width:780px){.contact-cta .button{width:100%}.contact-page-lead{font-size:15px}}
+.header-back{font-size:15px;font-weight:600;padding:12px 0}
+.header-back:hover{color:var(--red)}
+.form-page .contact-page{min-height:calc(100vh - 180px)}
+.form-page .contact-heading h1{font-size:clamp(52px,7vw,100px)}
+@media(max-width:780px){.form-page .contact-heading h1{font-size:clamp(38px,11.5vw,64px)}.form-page .header{height:78px}}
+.header nav a{white-space:nowrap}
+@media(min-width:781px) and (max-width:880px){.nav-long{display:none}}
