@@ -80,3 +80,17 @@ if ('IntersectionObserver' in window) {
     if (section) observer.observe(section);
   });
 }
+
+// Load the YouTube player only after a click, so the page stays light; without JS the link opens YouTube.
+document.querySelectorAll('[data-youtube]').forEach(link => link.addEventListener('click', event => {
+  event.preventDefault();
+  const frame = document.createElement('div');
+  frame.className = 'video-frame';
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube-nocookie.com/embed/${link.dataset.youtube}?autoplay=1&playsinline=1&rel=0`;
+  iframe.title = 'Teledysk „To nasz Gryf” — YouTube';
+  iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+  iframe.allowFullscreen = true;
+  frame.append(iframe);
+  link.replaceWith(frame);
+}));
