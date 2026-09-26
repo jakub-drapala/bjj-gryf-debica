@@ -2,7 +2,7 @@
 
 Instrukcja pracy z wersjami: [commitowanie zmian i publikacja na Cloudflare](COMMIT-I-PUBLIKACJA.md).
 
-Docelowa strona rozwija wybrany wariant 2 „Klub”: jasne tło, czerwień herbu i żółte akcenty. Publiczny adres: https://bjj-gryf-debica.jakubdrapala.workers.dev/
+Docelowa strona rozwija wybrany wariant 2 „Klub”: jasne tło, czerwień herbu i żółte akcenty. Publiczny adres: https://bjjgryfdebica.pl/
 
 ## Zawartość
 

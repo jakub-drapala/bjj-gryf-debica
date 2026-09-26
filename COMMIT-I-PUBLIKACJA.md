@@ -8,7 +8,7 @@ Repozytorium strony znajduje się w podkatalogu `landing-gryf`, a nie w katalogu
 cd /home/jakub-drapala/projects/stronka-bjjgryf/landing-gryf
 ```
 
-Strona produkcyjna: [bjj-gryf-debica.jakubdrapala.workers.dev](https://bjj-gryf-debica.jakubdrapala.workers.dev/).
+Strona produkcyjna: [bjjgryfdebica.pl](https://bjjgryfdebica.pl/).
 
 Konfiguracja Cloudflare: `wrangler.jsonc`. Nazwa Workera: `bjj-gryf-debica`. Publikowany jest katalog `dist/`. To strona statyczna: pliki w `dist/` są tutaj **źródłem strony**, należy je commitować i nie trzeba uruchamiać builda.
 
@@ -124,9 +124,9 @@ Otwórz publiczną stronę i sprawdź zmienioną sekcję. Przy problemie z pami�
 Możesz też porównać pliki produkcyjne z lokalnymi:
 
 ```bash
-curl -fsSL 'https://bjj-gryf-debica.jakubdrapala.workers.dev/' -o /tmp/gryf-live-index.html
+curl -fsSL 'https://bjjgryfdebica.pl/' -o /tmp/gryf-live-index.html
 cmp dist/index.html /tmp/gryf-live-index.html
-curl -fsSL 'https://bjj-gryf-debica.jakubdrapala.workers.dev/style.css?v=4' -o /tmp/gryf-live-style.css
+curl -fsSL 'https://bjjgryfdebica.pl/style.css?v=4' -o /tmp/gryf-live-style.css
 cmp dist/style.css /tmp/gryf-live-style.css
 ```
 
