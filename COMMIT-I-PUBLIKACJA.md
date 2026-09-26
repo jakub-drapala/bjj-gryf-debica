@@ -1,155 +1,121 @@
 # Commitowanie zmian i publikowanie strony Gryfa
 
-## Gdzie pracować
+## Jak to działa
 
-Repozytorium strony znajduje się w podkatalogu `landing-gryf`, a nie w katalogu z materiałami klubu. Wszystkie poniższe polecenia wykonuj stąd:
+| Gałąź | Środowisko | Adres |
+| --- | --- | --- |
+| `test` | podgląd do sprawdzania zmian | https://test-bjj-gryf-debica.jakubdrapala.workers.dev/ |
+| `main` | produkcja | https://bjjgryfdebica.pl/ |
+
+Repozytorium: `git@github.com:jakub-drapala/bjj-gryf-debica.git` (katalog `landing-gryf`, nie katalog z materiałami klubu). Cloudflare Workers Builds pilnuje obu gałęzi. **Push wystarczy do publikacji**: po `git push` na `test` Cloudflare uruchamia `npx wrangler preview`, a po pushu na `main` uruchamia `npx wrangler deploy`. Każda z tych publikacji trwa ok. 30–60 s. Ręczny `wrangler deploy` nie jest potrzebny.
+
+Zasada: **zmiany zawsze najpierw na `test`**, a na `main` trafiają tylko sprawdzone commity. `main` przesuwamy bez merge commitów (`--ff-only`), dzięki czemu obie gałęzie mają tę samą historię.
+
+Adresy podglądu (`*.workers.dev`) dostają nagłówek `noindex` (`src/index.js`), więc Google ich nie indeksuje. Do wysyłania ludziom służy tylko domena.
 
 ```bash
 cd /home/jakub-drapala/projects/stronka-bjjgryf/landing-gryf
 ```
 
-Strona produkcyjna: [bjjgryfdebica.pl](https://bjjgryfdebica.pl/).
+## 1. Zacznij od aktualnego `test`
 
-Konfiguracja Cloudflare: `wrangler.jsonc`. Nazwa Workera: `bjj-gryf-debica`. Publikowany jest katalog `dist/`. To strona statyczna: pliki w `dist/` są tutaj **źródłem strony**, należy je commitować i nie trzeba uruchamiać builda.
+```bash
+git checkout test
+git pull --ff-only
+git merge --ff-only origin/main   # na wypadek poprawki wrzuconej prosto na main
+```
 
-Stan sprawdzony 25.09.2026: gałąź `main`, brak skonfigurowanego zdalnego repozytorium Git. Istnieją niezatwierdzone zmiany obejmujące rozwiniętą stronę i konfigurację Cloudflare. Wcześniejsze wdrożenia Cloudflare wykonywano bezpośrednio z plików roboczych, więc ostatni commit nie odzwierciedla jeszcze całej opublikowanej strony.
-
-## 1. Zmień odpowiednie pliki
+## 2. Zmień pliki
 
 | Plik | Zawartość |
 | --- | --- |
-| `dist/index.html` | Treść, grafik, kontakt, metadane i struktura strony |
-| `dist/formularz.html` | Samodzielna strona `/formularz` — „Formularz zgłoszeniowy” do Marcina, bez menu strony głównej |
-| `dist/formularz.js` | Wysyłka formularza przez EmailJS i wybór treningu z parametru `?trening=` |
-| `dist/style.css` | Kolory, układ, typografia i wersja mobilna |
-| `dist/app.js` | Menu, filtry grafiku i oznaczenie bieżącego dnia (tylko strona główna) |
-| `dist/fonts.css` | Lokalne fonty |
-| `dist/assets/` | Zdjęcia, herb, grafika promocyjna i fonty z licencjami |
-| `dist/_redirects` | Przekierowania starych adresów szablonów i `/kontakt` → `/formularz` |
-| `wrangler.jsonc` | Konfiguracja wdrożenia na Cloudflare |
+| `dist/index.html` | Treść, grafik, kontakt, metadane, dane strukturalne JSON-LD |
+| `dist/formularz.html` | Samodzielna strona `/formularz` — „Formularz zgłoszeniowy” |
+| `dist/formularz.js` | Wysyłka formularza przez EmailJS i wybór treningu z `?trening=` |
+| `dist/style.css` | Kolory, układ, typografia, wersja mobilna |
+| `dist/app.js` | Menu, filtry grafiku, bieżący dzień, film z YouTube po kliknięciu |
+| `dist/assets/` | Zdjęcia (WebP), herb, okładka filmu, `og-gryf.jpg`, fonty |
+| `dist/_redirects` | Stare adresy szablonów i `/kontakt` → `/formularz` |
+| `dist/robots.txt`, `dist/sitemap.xml` | Dla Google; nową podstronę dopisz do mapy |
+| `src/index.js` | Przekierowanie `www` → domena i `noindex` na workers.dev |
+| `wrangler.jsonc` | Konfiguracja Workera, domeny i podglądów (blok `previews` jest wymagany) |
 
-Przy zmianie CSS lub JavaScriptu zwiększ numer przy odpowiednim odnośniku w `dist/index.html`, np. `style.css?v=4` na `style.css?v=5`. Numery CSS i JS mogą być różne. Dla zmienianych zdjęć lub fontów można użyć nowej nazwy pliku i zaktualizować odnośniki.
+Przy zmianie CSS lub JS zwiększ numer w odnośniku, np. `style.css?v=12` → `?v=13` — **w obu plikach HTML**, bo `formularz.html` też ładuje `style.css`. Zmienione zdjęcie najlepiej zapisać pod nową nazwą.
 
-## 2. Sprawdź zmiany lokalnie
+Przy zmianie grafiku zaktualizuj też: licznik zajęć w HTML, `openingHoursSpecification` w JSON-LD i sekcję „Dane” w README.
+
+## 3. Sprawdź lokalnie
 
 ```bash
 git status --short
-git diff --stat
 git diff
 git diff --check
-node --check dist/app.js
-python3 -m http.server 4173 --directory dist
+for f in dist/app.js dist/formularz.js src/index.js; do node --check "$f"; done
+npx -y wrangler@4.141.0 dev --port 8791
 ```
 
-Otwórz [lokalny podgląd](http://localhost:4173). Serwer zatrzymasz skrótem `Ctrl+C`. `node --check` sprawdza składnię JS, nie zastępuje kontroli działania strony.
+Otwórz http://localhost:8791 (tak jak na Cloudflare, razem z `/formularz` i przekierowaniami). Zatrzymanie: `Ctrl+C`.
 
-Zakres kontroli dopasuj do zmiany. Przy większych zmianach sprawdź:
+Przy większych zmianach sprawdź:
 
-- wygląd na komputerze i telefonie, bez poziomego przewijania;
-- menu mobilne, kotwice i rozwijane pytania;
-- filtry grafiku: wszystkie — 11 treningów, początkujący — 2, dzieci — 4, młodzież i dorośli — 7;
-- środowe No-Gi początkujących o **18:00**;
-- telefon **690 012 036**, e-mail **marcinb88@interia.pl** i linki Facebooka;
-- ładowanie zdjęć i fontów.
+- komputer i telefon, bez poziomego przewijania;
+- menu mobilne, kotwice, rozwijane pytania, film (odtwarza się po kliknięciu);
+- filtry grafiku: wszystkie — 11, początkujący — 2, dzieci — 4, młodzież i dorośli — 7;
+- telefon **690 012 036**, e-mail i linki Facebooka.
 
-Powyższe liczby zajęć opisują obecny grafik; przy jego zmianie zaktualizuj także tekst domyślnego licznika w HTML i dokumentację. `git diff` nie pokazuje treści nowych, nieśledzonych plików — obejrzyj je osobno albo w podglądzie zmian przygotowanych do commita.
-
-## 3. Zapisz commit
-
-Najpierw przygotuj tylko pliki należące do danej zmiany. Przykład dla poprawki wyglądu:
+## 4. Commit i push na `test`
 
 ```bash
-git add dist/index.html dist/style.css
-git diff --cached --stat
+git add <zmienione pliki>
 git diff --cached
-git diff --cached --check
-git commit -m "Przyciemnij sekcję kontaktową"
-git status --short
-git log -1 --oneline
+git commit -m "Opis efektu, np. Popraw grafik na telefonach"
+git push
 ```
 
-Jeśli zmieniasz zdjęcia, skrypty lub dokumentację, dodaj również te pliki. Commit powinien opisywać konkretny efekt, np. `Popraw grafik BJJ na telefonach`.
+Po ok. minucie sprawdź podgląd: https://test-bjj-gryf-debica.jakubdrapala.workers.dev/ (`Ctrl+Shift+R`, jeśli widać starą wersję). Status i logi buildów: Cloudflare → Workers & Pages → `bjj-gryf-debica` → **Deployments** / **Builds**.
 
-### Pierwszy commit obecnego stanu
+Na podglądzie **formularz wysyła prawdziwe maile do Marcina** — testowe zgłoszenie opisz jako test albo go nie wysyłaj.
 
-Ponieważ aktualna strona ma dużo dotąd niezatwierdzonych zmian, po ich przeglądzie można zapisać cały obecny stan:
+## 5. Publikacja na produkcję
+
+Gdy podgląd jest w porządku:
 
 ```bash
-git add .gitignore wrangler.jsonc README.md COMMIT-I-PUBLIKACJA.md dist/ archive/
-git diff --cached --stat
-git diff --cached --check
-git diff --cached
-git commit -m "Rozwiń wariant Klub i skonfiguruj publikację na Cloudflare"
-git status --short
+git checkout main
+git pull --ff-only
+git merge --ff-only test
+git push
+git checkout test
 ```
 
-`archive/` zawiera kod poprzednich projektów i nie jest publikowane. `.gitignore` wyklucza m.in. `.wrangler/`, `node_modules/` i lokalne pliki środowiska. Nie dodawaj tokenów ani danych logowania do repozytorium.
+Jeśli `merge --ff-only` odmawia, `main` ma commit, którego nie ma na `test` — najpierw wróć na `test`, zrób `git merge --ff-only origin/main` (albo zwykły merge), sprawdź podgląd i powtórz.
 
-## 4. Opublikuj na Cloudflare
+## 6. Sprawdź produkcję
 
-Commit i wdrożenie to osobne czynności. **Wrangler publikuje aktualne pliki z dysku, nie zawartość wskazanego commita.** Przed publikacją upewnij się, że wszystkie zmiany do wdrożenia są zatwierdzone i nie edytuj ich do zakończenia wdrożenia.
+Po ok. minucie:
 
 ```bash
-git status --short
-git rev-parse HEAD
-npx wrangler@4.92.0 whoami
-npx wrangler@4.92.0 deploy --dry-run --config wrangler.jsonc
-npx wrangler@4.92.0 deploy --config wrangler.jsonc
+curl -fsSL https://bjjgryfdebica.pl/ | cmp - dist/index.html && echo "index.html zgodny"
+curl -sI https://www.bjjgryfdebica.pl/ | grep -i -E '^(HTTP|location)'
 ```
 
-Brak wyniku `git status --short` oznacza czyste drzewo robocze. `whoami` powinno pokazać konto Cloudflare używane do strony Gryfa. Jeżeli nie jesteś zalogowany:
+Pierwsze polecenie bez błędu oznacza, że produkcja ma dokładnie lokalny `index.html`. Drugie powinno pokazać `301` i `location: https://bjjgryfdebica.pl/`. Zmieniony CSS/JS porównaj analogicznie, podając aktualny `?v=`.
 
-```bash
-npx wrangler@4.92.0 login
-```
-
-`npx` może pobrać podaną wersję Wranglera. Na obecnym komputerze można zamiast tego korzystać z narzędzia już zainstalowanego dla sklepu — zastąp `npx wrangler@4.92.0` poniższym początkiem polecenia:
-
-```bash
-node /home/jakub-drapala/projects/sklep-internetowy/prowadz-premium/node_modules/wrangler/bin/wrangler.js
-```
-
-Przykładowe pełne polecenie publikacji:
-
-```bash
-node /home/jakub-drapala/projects/sklep-internetowy/prowadz-premium/node_modules/wrangler/bin/wrangler.js deploy --config wrangler.jsonc
-```
-
-Poczekaj na zakończenie z kodem 0, komunikat `Deployed bjj-gryf-debica`, publiczny adres i `Current Version ID`. Zapisz identyfikator wersji razem z SHA commita w notatce wydania, jeśli potrzebujesz później powiązać wdrożenie z kodem. Sam komunikat o przesłaniu plików nie potwierdza zakończenia wdrożenia.
-
-## 5. Sprawdź opublikowaną wersję
-
-Otwórz publiczną stronę i sprawdź zmienioną sekcję. Przy problemie z pamięcią przeglądarki użyj twardego odświeżenia `Ctrl+Shift+R`.
-
-Możesz też porównać pliki produkcyjne z lokalnymi:
-
-```bash
-curl -fsSL 'https://bjjgryfdebica.pl/' -o /tmp/gryf-live-index.html
-cmp dist/index.html /tmp/gryf-live-index.html
-curl -fsSL 'https://bjjgryfdebica.pl/style.css?v=4' -o /tmp/gryf-live-style.css
-cmp dist/style.css /tmp/gryf-live-style.css
-```
-
-Zmień `v=4` na wartość aktualnie wpisaną w HTML. `cmp` bez komunikatu i z kodem 0 oznacza identyczne pliki. Jeśli pobieranie się nie powiedzie, nie traktuj pozostawionego wcześniej pliku w `/tmp` jako aktualnego wyniku. Dla zmienionego JS lub zdjęcia wykonaj analogiczne porównanie.
-
-## Git push i automatyzacja
-
-Obecnie `git remote -v` nie zwraca żadnego adresu. **Nie ma skonfigurowanego `origin` ani automatycznego wdrożenia po pushu.** Sam commit zapisuje historię lokalnie; publikacja odbywa się poleceniem Wrangler opisanym wyżej.
-
-Jeśli później powstanie repozytorium GitHub, dodaj jego rzeczywisty adres jako `origin`, a następnie wykonaj `git push -u origin main`. Nie używaj adresu repozytorium sklepu. Automatyczne wdrożenie wymaga osobnej konfiguracji workflow i sekretów Cloudflare — sam push go nie uruchomi.
-
-Plik `.openai/hosting.json` dotyczy wcześniejszego prywatnego podglądu Sites. Nie służy do tego procesu publikacji i wdrożenie Wrangler go nie aktualizuje.
+Podgląd linku na Facebooku odświeżysz w [Sharing Debugger](https://developers.facebook.com/tools/debug/) → „Scrape Again” (Facebook trzyma stary obrazek w pamięci).
 
 ## Jak cofnąć błędną zmianę
 
-Najpierw upewnij się, że drzewo robocze jest czyste. Jeśli błąd pochodzi z pojedynczego zwykłego commita, znajdź jego SHA i utwórz commit odwracający zmianę:
-
 ```bash
-git status --short
-git log -5 --oneline
+git checkout test
 git revert SHA_BLEDNEGO_COMMITA
+git push
+# sprawdź podgląd, potem krok 5
 ```
 
-`SHA_BLEDNEGO_COMMITA` zastąp rzeczywistym SHA z historii. W razie konfliktów rozwiąż je przed dalszą pracą. Następnie sprawdź stronę i ponownie wykonaj publikację oraz weryfikację z kroków 4–5. Revert zachowuje historię. Nie używaj `git reset --hard` do rutynowego wycofywania wdrożeń.
+Revert zachowuje historię. Nie używaj `git reset --hard` ani `push --force` na `main`.
 
-**Zalecana kolejność:** edycja → lokalna kontrola → przegląd zmian → commit → deploy → kontrola strony publicznej.
+Awaryjnie, gdy strona produkcyjna jest zepsuta i nie ma czasu na revert: Cloudflare → `bjj-gryf-debica` → **Deployments** → przy poprzedniej wersji **Rollback**. Potem i tak zrób revert w Gicie, bo kolejny push na `main` nadpisze rollback.
+
+## Nie commituj
+
+Tokenów, haseł ani plików `.env` / `.dev.vars` (są w `.gitignore`). Repozytorium jest publiczne. Klucz EmailJS w `formularz.js` jest publiczny z założenia.

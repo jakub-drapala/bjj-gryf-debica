@@ -1,5 +1,6 @@
 {
   "name": "bjj-gryf-debica",
+  "main": "src/index.js",
   "compatibility_date": "2026-09-25",
   "workers_dev": true,
   "routes": [
@@ -8,6 +9,8 @@
   ],
   "previews": {},
   "assets": {
+    "binding": "ASSETS",
+    "run_worker_first": true,
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none"

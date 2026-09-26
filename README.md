@@ -29,26 +29,26 @@ Poprzednie trzy projekty zachowano jako kopie kodu w `archive/szablony-v1/`. Nie
 
 ## Cloudflare Workers
 
-Worker: `bjj-gryf-debica`, konfiguracja: `wrangler.jsonc`. Publikowany jest wyłącznie katalog `dist`; build nie jest potrzebny. Wymagane logowanie Wrangler do konta Cloudflare użytkownika.
+Worker: `bjj-gryf-debica`, konfiguracja: `wrangler.jsonc`. Pliki strony leżą w `dist/`; build nie jest potrzebny. Mały skrypt `src/index.js` obsługuje każde zapytanie przed plikami (`run_worker_first`):
 
-```bash
-node --check dist/app.js
-npx wrangler@4.92.0 deploy --config wrangler.jsonc
-```
+- `www.bjjgryfdebica.pl` → 301 na `bjjgryfdebica.pl` (ścieżka i parametry zostają);
+- adresy `*.workers.dev` (produkcyjny i podglądy z gałęzi `test`) dostają nagłówek `X-Robots-Tag: noindex`, żeby Google indeksował tylko domenę;
+- resztę serwuje `env.ASSETS` razem z `dist/_redirects`.
 
-Lokalnie można skorzystać z narzędzia zainstalowanego dla sklepu:
+Publikacja idzie automatycznie z GitHuba: `main` → produkcja, `test` → podgląd. Szczegóły: [COMMIT-I-PUBLIKACJA.md](COMMIT-I-PUBLIKACJA.md).
 
-```bash
-node /home/jakub-drapala/projects/sklep-internetowy/prowadz-premium/node_modules/wrangler/bin/wrangler.js deploy --config wrangler.jsonc
-```
+## SEO i podgląd linków
 
-Automatyczna obsługa HTML udostępnia stronę główną pod `/`. Hosting Cloudflare jest niezależny od poprzedniego prywatnego podglądu Sites, który nie jest aktualizowany w tym procesie.
+- Tytuł, opis i H1 zawierają „brazylijskie jiu-jitsu” i „Dębica”; nadtytuł w H1 wygląda jak dawny `.eyebrow`.
+- Dane strukturalne JSON-LD w `dist/index.html`: `SportsClub` (adres, godziny z grafiku, telefon, logo), `Person` (Marcin) i `WebSite`. Przy zmianie grafiku popraw `openingHoursSpecification`.
+- `dist/assets/og-gryf.jpg` (1200×630) — obraz podglądu linku na Facebooku i w komunikatorach, używany przez obie strony.
+- `dist/robots.txt` i `dist/sitemap.xml` (strona główna i `/formularz`). Przy nowej podstronie dopisz ją do mapy.
 
 ## Formularz zgłoszeniowy
 
 Formularz jest na samodzielnej stronie `dist/formularz.html` (adres `/formularz`, w menu strony głównej „Formularz zgłoszeniowy”). Strona nie ma menu ani sekcji strony głównej — tylko herb z linkiem „← Strona klubu”, formularz i dane kontaktowe — więc link można wysyłać osobno (FB, SMS, kod QR). Sekcja `#kontakt` na stronie głównej prowadzi do niej przyciskiem. Stare adresy `/kontakt` i `/kontakt.html` przekierowują na `/formularz` (z zachowaniem parametrów) przez `dist/_redirects`. Formularz wysyła wiadomość z przeglądarki przez EmailJS (to samo konto co Business-website: public key `ZOBwl7GMNRPwk_VRu`, serwis `service_3ae2jx4`). Logika w `dist/formularz.js` (ładowany tylko na tej stronie, razem z biblioteką EmailJS). Szablon **`template_cyeoxc6`** ma w panelu EmailJS adresata `marcinb88@interia.pl` i zmienne `{{name}}`, `{{contact}}`, `{{training}}`, `{{message}}`; pole Reply-To: `{{reply_to}}` (wypełniane tylko, gdy w kontakcie podano e-mail). Parametr `?trening=<slug>` wybiera od razu opcję z listy (slug z atrybutu `data-slug`: `kids`, `junior`, `nogi-poczatkujacy`, `nogi-zaawansowani`, `gi`, `sparingi`, `indywidualny`, `nie-wiem`); tak działa „Umów trening 1:1” → `/formularz?trening=indywidualny`. Bez JavaScriptu formularz nie wysyła wiadomości; telefon i e-mail obok pozostają dostępne.
 
-Strony nie otworzysz pod `/formularz` przez `python3 -m http.server` (tylko jako `/formularz.html`), a przekierowania z `_redirects` tam nie działają. Zachowanie jak na Cloudflare daje `wrangler dev --config wrangler.jsonc --compatibility-date 2026-05-22` (lokalny runtime nie zna jeszcze daty z konfiguracji).
+Strony nie otworzysz pod `/formularz` przez `python3 -m http.server` (tylko jako `/formularz.html`), a przekierowania z `_redirects` tam nie działają. Zachowanie jak na Cloudflare (razem z `src/index.js`) daje `npx wrangler@4.141.0 dev --port 8791`. Starszy Wrangler 4.92 wymaga dopisania `--compatibility-date 2026-05-22`.
 
 ## Dane
 
