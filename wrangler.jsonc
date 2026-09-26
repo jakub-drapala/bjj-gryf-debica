@@ -6,6 +6,7 @@
     { "pattern": "bjjgryfdebica.pl", "custom_domain": true },
     { "pattern": "www.bjjgryfdebica.pl", "custom_domain": true }
   ],
+  "previews": {},
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",
