@@ -43,7 +43,7 @@ Publikacja idzie automatycznie z GitHuba: `main` → produkcja, `test` → podgl
 - Dane strukturalne JSON-LD w `dist/index.html`: `SportsClub` (adres, godziny z grafiku, telefon, logo), `Person` (Marcin) i `WebSite`. Przy zmianie grafiku popraw `openingHoursSpecification`.
 - `dist/assets/og-gryf.jpg` (1200×630) — obraz podglądu linku na Facebooku i w komunikatorach, używany przez obie strony.
 - `dist/robots.txt` i `dist/sitemap.xml` (strona główna, `/zajecia-dla-dzieci` i `/formularz`). Przy nowej podstronie dopisz ją do mapy.
-- `dist/zajecia-dla-dzieci.html` (adres `/zajecia-dla-dzieci`) — podstrona pod zapytania rodziców („zajęcia dla dzieci Dębica”, „sztuki walki dla dzieci”): BJJ Kids i Junior z godzinami, korzyści, trener i starty juniorów, pierwszy trening, pytania rodziców. Bez zdjęć dzieci (brak zgód rodziców). Linkują do niej menu, karta „Dzieci” i FAQ strony głównej. Przy zmianie grafiku dzieci popraw godziny także tutaj. Korzysta z `app.js` (menu); nie używa klasy `.day`, bo `app.js` oznacza nią bieżący dzień w grafiku.
+- `dist/zajecia-dla-dzieci.html` (adres `/zajecia-dla-dzieci`) — podstrona pod zapytania rodziców („zajęcia dla dzieci Dębica”, „sztuki walki dla dzieci”): BJJ Kids i Junior z godzinami, korzyści, trener i starty juniorów, pierwszy trening, pytania rodziców. Jedyne zdjęcie z dziećmi to kadr z rolki klubu na FB z 6.08.2026 (`assets/dzieci-trening.webp`) — dzieci siedzą tyłem, bez rozpoznawalnych twarzy. Linkują do niej menu, karta „Dzieci” i FAQ strony głównej. Przy zmianie grafiku dzieci popraw godziny także tutaj. Korzysta z `app.js` (menu); nie używa klasy `.day`, bo `app.js` oznacza nią bieżący dzień w grafiku.
 
 ## Formularz zgłoszeniowy
 
