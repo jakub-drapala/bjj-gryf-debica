@@ -42,7 +42,8 @@ Publikacja idzie automatycznie z GitHuba: `main` → produkcja, `test` → podgl
 - Tytuł, opis i H1 zawierają „brazylijskie jiu-jitsu” i „Dębica”; nadtytuł w H1 wygląda jak dawny `.eyebrow`.
 - Dane strukturalne JSON-LD w `dist/index.html`: `SportsClub` (adres, godziny z grafiku, telefon, logo), `Person` (Marcin) i `WebSite`. Przy zmianie grafiku popraw `openingHoursSpecification`.
 - `dist/assets/og-gryf.jpg` (1200×630) — obraz podglądu linku na Facebooku i w komunikatorach, używany przez obie strony.
-- `dist/robots.txt` i `dist/sitemap.xml` (strona główna i `/formularz`). Przy nowej podstronie dopisz ją do mapy.
+- `dist/robots.txt` i `dist/sitemap.xml` (strona główna, `/zajecia-dla-dzieci` i `/formularz`). Przy nowej podstronie dopisz ją do mapy.
+- `dist/zajecia-dla-dzieci.html` (adres `/zajecia-dla-dzieci`) — podstrona pod zapytania rodziców („zajęcia dla dzieci Dębica”, „sztuki walki dla dzieci”): BJJ Kids i Junior z godzinami, korzyści, trener i starty juniorów, pierwszy trening, pytania rodziców. Bez zdjęć dzieci (brak zgód rodziców). Linkują do niej menu, karta „Dzieci” i FAQ strony głównej. Przy zmianie grafiku dzieci popraw godziny także tutaj. Korzysta z `app.js` (menu); nie używa klasy `.day`, bo `app.js` oznacza nią bieżący dzień w grafiku.
 
 ## Formularz zgłoszeniowy
 
