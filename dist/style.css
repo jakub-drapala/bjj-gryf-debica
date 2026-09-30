@@ -73,3 +73,5 @@ h1 .eyebrow{font-family:var(--body);line-height:1.65}.group-grid.kids-groups{gri
 @media(max-width:850px){.partner-grid{grid-template-columns:1fr 1fr}.partner-card{padding:22px}.partner-card h3{font-size:29px}}
 @media(max-width:780px){.partners-section{padding-top:55px}.partner-grid{grid-template-columns:1fr;gap:14px}.partner-card h3{font-size:30px}}
 @media print{.partner-grid{grid-template-columns:repeat(3,1fr)}}
+.partner-logo{height:72px;width:auto;max-width:100%;object-fit:contain;object-position:left center;margin-bottom:22px}
+@media(max-width:780px){.partner-logo{height:64px;margin-bottom:18px}}
