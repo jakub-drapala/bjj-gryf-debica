@@ -70,7 +70,7 @@ h1 .eyebrow{font-family:var(--body);line-height:1.65}.group-grid.kids-groups{gri
 .trainer-section .text-link+.text-link{margin-left:26px}
 .nowrap{white-space:nowrap}.club-facts+.results-year{border-top:0}
 /* Partners: freestanding logos on the page background. */
-.partners-section{border-top:1px solid var(--line);padding-top:70px}
+.partners-section{padding-block:80px 40px}
 .partners-section .section-heading{align-items:center;margin-bottom:40px}
 .partners-section .eyebrow{color:var(--muted)}
 .partners-section .eyebrow::before{content:"";width:28px;height:3px;background:var(--red)}
@@ -97,6 +97,6 @@ h1 .eyebrow{font-family:var(--body);line-height:1.65}.group-grid.kids-groups{gri
 .partner-tile:focus-visible{outline:3px solid var(--red);outline-offset:4px}
 @media(min-width:1051px){.partners-section h2 br{display:none}.partners-section h2 em{display:block}}
 @media(max-width:1050px){.partner-wall{column-gap:24px}.partner-tile{grid-template-columns:84px minmax(0,1fr) 30px;gap:16px;padding-block:22px}.partner-mark{width:84px;height:84px;padding:13px}.partner-mark img.sq{width:58px;height:58px}.partner-mark img.big{width:70px;height:70px;max-width:70px;max-height:70px}.partner-mark img.icon{width:56px;height:56px}.partner-meta strong{font-size:24px}.partner-arrow{width:30px;height:30px;font-size:19px}}
-@media(max-width:780px){.partners-section{padding-top:55px}.partners-section .section-heading{margin-bottom:30px}.partner-wall{grid-template-columns:1fr}.partner-wall>li:nth-last-child(2){border-bottom:0}.partner-tile{grid-template-columns:84px minmax(0,1fr) 32px;gap:20px;padding:22px 0}.partner-meta strong{font-size:26px}.partner-meta>span{margin-top:7px}.partner-arrow{width:32px;height:32px}}
+@media(max-width:780px){.partners-section{padding-block:55px 20px}.partners-section .section-heading{margin-bottom:30px}.partner-wall{grid-template-columns:1fr}.partner-wall>li:nth-last-child(2){border-bottom:0}.partner-tile{grid-template-columns:84px minmax(0,1fr) 32px;gap:20px;padding:22px 0}.partner-meta strong{font-size:26px}.partner-meta>span{margin-top:7px}.partner-arrow{width:32px;height:32px}}
 @media(max-width:380px){.partner-tile{grid-template-columns:68px minmax(0,1fr) 28px;gap:12px}.partner-mark{width:68px;height:68px;padding:10px}.partner-mark img.sq{width:48px;height:48px}.partner-mark img.big{width:58px;height:58px;max-width:58px;max-height:58px}.partner-mark img.icon{width:46px;height:46px}.partner-meta strong{font-size:22px}.partner-arrow{width:28px;height:28px}}
 @media print{.partner-wall{grid-template-columns:repeat(2,minmax(0,1fr))}.partner-tile{break-inside:avoid}}
