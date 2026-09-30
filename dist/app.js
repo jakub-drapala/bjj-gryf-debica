@@ -87,7 +87,7 @@ document.querySelectorAll('[data-youtube]').forEach(link => link.addEventListene
   const frame = document.createElement('div');
   frame.className = 'video-frame';
   const iframe = document.createElement('iframe');
-  iframe.src = `https://www.youtube-nocookie.com/embed/${link.dataset.youtube}?autoplay=1&playsinline=1&rel=0`;
+  iframe.src = `https://www.youtube-nocookie.com/embed/${link.dataset.youtube}?autoplay=1&playsinline=1&rel=0&cc_load_policy=0`;
   iframe.title = 'Teledysk „To nasz Gryf” — YouTube';
   iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
   iframe.allowFullscreen = true;
