@@ -69,7 +69,7 @@ h1 .eyebrow{font-family:var(--body);line-height:1.65}.group-grid.kids-groups{gri
 @media(max-width:780px){.results-year{grid-template-columns:1fr;gap:10px;padding-block:40px}.result h3{font-size:27px}.medals li{font-size:15px;gap:10px}.medal{min-width:72px}}
 .trainer-section .text-link+.text-link{margin-left:26px}
 .nowrap{white-space:nowrap}.club-facts+.results-year{border-top:0}
-/* Partners: compact logo tiles on a light, editorial layout. */
+/* Partners: freestanding logos on the page background. */
 .partners-section{border-top:1px solid var(--line);padding-top:70px}
 .partners-section .section-heading{align-items:center;margin-bottom:40px}
 .partners-section .eyebrow{color:var(--muted)}
@@ -78,11 +78,13 @@ h1 .eyebrow{font-family:var(--body);line-height:1.65}.group-grid.kids-groups{gri
 .partner-wall>li{min-width:0;border-top:1px solid var(--line)}
 .partner-wall>li:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
 .partner-tile{display:grid;grid-template-columns:104px minmax(0,1fr) 36px;gap:24px;align-items:center;height:100%;padding:26px 12px 26px 0;color:var(--ink);transition:background .2s}
-.partner-mark{display:flex;align-items:center;justify-content:center;width:104px;height:104px;padding:16px;background:#000;border-radius:4px}
+.partner-mark{display:flex;align-items:center;justify-content:center;width:104px;height:104px;padding:8px}
 .partner-mark img{max-width:100%;max-height:100%;object-fit:contain;transition:transform .2s}
 .partner-mark img.sq{width:72px;height:72px}
 .partner-mark img.big{width:84px;height:84px;max-width:84px;max-height:84px}
 .partner-mark img.wide{width:100%;height:auto}
+.partner-mark img.on-light{filter:grayscale(1) invert(1);mix-blend-mode:multiply}
+.partner-mark img.wordmark{filter:brightness(0);opacity:.9}
 .partner-mark img.icon{width:68px;height:68px;border-radius:10px}
 .partner-meta{display:block;min-width:0}
 .partner-meta strong{display:block;font:700 28px/1.08 var(--display);letter-spacing:.01em}
